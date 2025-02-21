@@ -131,47 +131,39 @@ namespace core {
         core::vec3 normal;
         core::vec3 texcoord;
 
-        // Standardkonstruktor
         vertex() : position(vec3::zero()), normal(vec3::zero()), texcoord(vec3::zero()) {}
 
-        // Konstruktor mit Argumenten
         vertex(const vec3& pos, const vec3& norm, const vec3& tex) : position(pos), normal(norm), texcoord(tex) {}
 
-        // Vergleichsoperator ==
         bool operator==(const vertex& v) const {
             return position == v.position && normal == v.normal && texcoord == v.texcoord;
         }
 
-        // Vergleichsoperator !=
         bool operator!=(const vertex& v) const {
             return !(*this == v);
         }
     };
-
 }
 
-class dVec {
+class objectVec {
 private:
-    int* data;
+    object* data;
     int capacity;
     int size;
 
     void resize();
 
 public:
-    dVec();
-    ~dVec();
+    objectVec();
+    ~objectVec();
 
-    void push_back(int value);
+    void push_back(const object& obj);
     void pop_back();
 
-    int at(int index);
+    object& at(int index);
     int getSize() const;
     int getCapacity() const;
-
-    void display() const;
 };
-
 
 class object
 {

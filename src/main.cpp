@@ -24,21 +24,22 @@
 
 #include <RC/rendercore.h>
 #include <stdexcept>
+#include <stdexcept>
 #include <iostream> 
 
-dVec::dVec() {
+objectVec::objectVec() {
 	size = 0;
 	capacity = 2;
-	data = new int[capacity];
+	data = new object[capacity];
 }
 
-dVec::~dVec() {
+objectVec::~objectVec() {
 	delete[] data;
 }
 
-void dVec::resize() {
+void objectVec::resize() {
 	capacity *= 2;
-	int* newData = new int[capacity];
+	object* newData = new object[capacity];
 
 	for (int i = 0; i < size; i++) {
 		newData[i] = data[i];
@@ -48,40 +49,33 @@ void dVec::resize() {
 	data = newData;
 }
 
-void dVec::push_back(int value) {
+void objectVec::push_back(const object& obj) {
 	if (size == capacity) {
 		resize();
 	}
-	data[size] = value;
+	data[size] = obj;
 	size++;
 }
 
-void dVec::pop_back() {
+void objectVec::pop_back() {
 	if (size > 0) {
 		size--;
 	}
 }
 
-int dVec::at(int index) {
+object& objectVec::at(int index) {
 	if (index >= 0 && index < size) {
 		return data[index];
 	}
 	throw std::out_of_range("Index out of bounds");
 }
 
-int dVec::getSize() const {
+int objectVec::getSize() const {
 	return size;
 }
 
-int dVec::getCapacity() const {
+int objectVec::getCapacity() const {
 	return capacity;
-}
-
-void dVec::display() const {
-	for (int i = 0; i < size; i++) {
-		std::cout << data[i] << " ";
-	}
-	std::cout << std::endl;
 }
 
 RenderCore::RenderCore() {
@@ -119,7 +113,7 @@ object* scene::createObject(const char* modelPath,
 }
 
 scene::scene() {
-
+	objectVec objects;
 }
 
 scene::~scene() {
