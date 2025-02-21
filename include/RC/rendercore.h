@@ -26,11 +26,13 @@
 #define RC_RENDERCORE_H
 
 #include <Windows.h>
+#include <cmath>
 
 namespace core {
     struct vec3 {
         float x, y, z;
 
+        vec3() : x(0), y(0), z(0) {}
         vec3(float x, float y, float z) : x(x), y(y), z(z) {}
 
         vec3 operator+(const vec3& v) const { return vec3(x + v.x, y + v.y, z + v.z); }
@@ -67,6 +69,14 @@ namespace core {
             y /= v.y;
             z /= v.z;
             return *this;
+        }
+
+        bool operator==(const vec3& other) const {
+            return x == other.x && y == other.y && z == other.z;
+        }
+
+        bool operator!=(const vec3& other) const {
+            return !(*this == other);
         }
 
         vec3 operator*(float s) const { return vec3(x * s, y * s, z * s); }
@@ -117,21 +127,27 @@ namespace core {
     };
 
     struct vertex {
-        vec3 position;
-        vec3 normal;
-        vec3 texcoord;
+        core::vec3 position;
+        core::vec3 normal;
+        core::vec3 texcoord;
 
+        // Standardkonstruktor
         vertex() : position(vec3::zero()), normal(vec3::zero()), texcoord(vec3::zero()) {}
+
+        // Konstruktor mit Argumenten
         vertex(const vec3& pos, const vec3& norm, const vec3& tex) : position(pos), normal(norm), texcoord(tex) {}
 
+        // Vergleichsoperator ==
         bool operator==(const vertex& v) const {
             return position == v.position && normal == v.normal && texcoord == v.texcoord;
         }
 
+        // Vergleichsoperator !=
         bool operator!=(const vertex& v) const {
             return !(*this == v);
         }
     };
+
 }
 
 class dVec {
@@ -174,11 +190,11 @@ public:
     scene();
     ~scene();
 
-	object* createObject(const char* modelPath, 
-        const char* texturePath, 
-        core::vec3 position,
-        core::vec3 rotation,
-        core::vec3 scale);
+    object* createObject(const char* modelPath,
+        const char* texturePath,
+        core::vec3* position,
+        core::vec3* rotation,
+        core::vec3* scale);
 
 private:
 

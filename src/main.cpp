@@ -22,7 +22,7 @@
 **
 ========================================================================*/
 
-#include "RC/rendercore.h"
+#include <RC/rendercore.h>
 #include <stdexcept>
 #include <iostream> 
 
@@ -112,9 +112,9 @@ void RenderCore::setActiveScene(scene* scene) {
 
 object* scene::createObject(const char* modelPath,
 	const char* texturePath,
-	core::vec3 position,
-	core::vec3 rotation,
-	core::vec3 scale) {
+	core::vec3* position = new core::vec3{0, 0, 0},
+	core::vec3* rotation = new core::vec3{ 0, 0, 0 },
+	core::vec3* scale = new core::vec3{ 1, 1, 1 }) {
 	return new object();
 }
 
